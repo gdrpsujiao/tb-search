@@ -2,8 +2,8 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import { defineAsyncComponent } from 'vue'
 
 const router = createRouter({
-    // history: createWebHashHistory(), // hash 模式
-    history: createWebHistory(),
+    history: createWebHashHistory(), // hash 模式
+    // history: createWebHistory(),
     routes: [
         {
             path: '/',
