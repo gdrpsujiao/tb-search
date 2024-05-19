@@ -9,7 +9,7 @@ import env from './env'
 // https://vitejs.dev/config/
 export default defineConfig({
   // base: './',
-  base: '/tb-search/', // github io 部署
+  // base: '/', // github io 部署
   plugins: [
     // legacy({
     //   targets: ['ie>=11'],
