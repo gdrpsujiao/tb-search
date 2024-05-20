@@ -177,7 +177,7 @@ const network = () => {
                 // 处理数据
                 let hasUndone = false
                 const list = res.reduce((result, item) => {
-                    const { status } = item
+                    const { status, statusStr } = item
                     if(status == 1) {
                         hasUndone = true
                     }
@@ -187,7 +187,7 @@ const network = () => {
                     }
                     result.push({
                         ...item,
-                        statusResult: statusInfo[status]
+                        statusResult: statusInfo[status] || statusStr
                     })
                     return result
                 }, [])
@@ -396,9 +396,9 @@ const cleanAllCookie = () => {
     }
     .search-container {
         display: flex;
-        margin: 30px 30px;
+        margin: 30px 20px;
         .van-button {
-            margin-left: 20px;
+            margin-left: 10px;
         }
         .van-field {
             ::v-deep .van-field__left-icon {
@@ -407,7 +407,7 @@ const cleanAllCookie = () => {
         }
     }
     .data-list-container {
-        margin: 20px 30px;
+        margin: 20px 20px;
         .info-card {
             position: relative;
             margin-bottom: 20px;

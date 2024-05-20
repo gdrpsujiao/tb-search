@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 import env from '../../env'
-import { showNotify } from 'vant'
+import { showNotify, showLoadingToast, closeToast } from 'vant'
 // import env from '../env.js'
 // const env = require('../env.js')
 
@@ -11,6 +11,29 @@ import { showNotify } from 'vant'
 const instance = axios.create({
     timeout: 10000
 })
+
+let requestCount = 0 // 用来判断是否显示 loading
+
+const addRequest = () => {
+    if(!requestCount) {
+        showLoadingToast({
+            message: 'loading',
+            loadingType: 'spinner',
+            // overlay: true,
+            forbidClick: true,
+            duration: 0
+        })
+    }
+    requestCount++
+}
+
+const reduceRequest = () => {
+    requestCount--
+    if(!requestCount) {
+        closeToast()
+    }
+}
+
 
 
 instance.interceptors.request.use(config => {
@@ -47,6 +70,9 @@ instance.interceptors.response.use(res => {
 
 
 const Axios = (options = {}) => {
+
+    addRequest()
+
     return new Promise((resolve, reject) => {
         const { url } = options
         const isTaobao = url.indexOf('/taobao/') == 0
@@ -66,6 +92,9 @@ const Axios = (options = {}) => {
             //         reject(res)
             //     }
             // }
+
+            reduceRequest()
+
             resolve(res)
         }).catch(err => {
             console.log(err, 'err')
@@ -77,6 +106,9 @@ const Axios = (options = {}) => {
                     message: '服务器异常，稍后重试'
                 })
             }
+
+            reduceRequest()
+            
             reject(err)
         })
     })
