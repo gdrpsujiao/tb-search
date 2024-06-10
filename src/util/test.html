@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <title>测试 vue 双向绑定</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{ title }}</h2>
+        <h3>{{ name }}</h3>
+        <!-- <h1 id="name">
+            <span id="a">aaa</span>
+            <span id="b">bbb</span>
+            <span id="c">ccc</span>
+        </h1> -->
+    </div>
+    
+</body>
+
+<script src="./test.js"></script>
+<script type="text/javascript">
+
+    var aVue = new aVue({
+        el: '#app',
+        data: {
+            title: 'Hello',
+            name: 'World'
+        },
+        methods: {
+            changeName() {
+                console.log('method')
+                this.name = 'aaa'
+            }
+        },
+        mounted() {
+            setTimeout(() => {
+                this.methods.changeName.call(this)
+                // this.changeName()
+                // this.name = 'bbb'
+            }, 2000)
+        }
+    })
+
+    // setTimeout(() => {
+    //     aVue.name = `${aVue.name}!`
+    // }, 2000)
+
+
+</script>
+
+</html>

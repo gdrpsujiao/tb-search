@@ -164,13 +164,14 @@ const network = () => {
                 renderData.value = res
             }
         },
-        getAllSearchListInfo: async (params) => {
-            const { wangwang } = params || {}
+        getAllSearchListInfo: async (params = {}) => {
+            const { wangwang } = params
             const { data } = await getAllSearchList({
+                ...params,
                 wangwang,
                 status: 0,
                 pn: pageCount.value,
-                ps: 10
+                ps: 10,
             })
             const { ok, res } = data
             if(ok) {
@@ -199,8 +200,10 @@ const network = () => {
                     // debugger
                     setTimeout(() => {
                         // debugger
-                        network().getAllSearchListInfo()
-                    }, 10000)
+                        network().getAllSearchListInfo({
+                            hideLoading: true
+                        })
+                    }, 5000)
                 }
             }
         },

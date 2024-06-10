@@ -70,8 +70,15 @@ instance.interceptors.response.use(res => {
 
 
 const Axios = (options = {}) => {
+    const { method, params, data } = options
+    const axiosData = method == 'get'? params: data
+    const { hideLoading = false } = axiosData || {}
+    // debugger
 
-    addRequest()
+    if(!hideLoading) {
+        addRequest()
+    }
+    
 
     return new Promise((resolve, reject) => {
         const { url } = options
@@ -93,7 +100,10 @@ const Axios = (options = {}) => {
             //     }
             // }
 
-            reduceRequest()
+            if(!hideLoading) {
+                reduceRequest()
+            }
+            
 
             resolve(res)
         }).catch(err => {
@@ -107,7 +117,9 @@ const Axios = (options = {}) => {
                 })
             }
 
-            reduceRequest()
+            if(!hideLoading) {
+                reduceRequest()
+            }
             
             reject(err)
         })

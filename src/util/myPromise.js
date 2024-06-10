@@ -54,7 +54,7 @@ class myPromise {
             const resolvePromise = cb => {
                  try {
                 
-                    const x = cb(this.promiseResult)
+                    const x = cb(this.promiseResult)    // 这里已经执行了回调函数
                     if(x === thenPromise) {
                         throw new Error('不能返回自身')
                     }
@@ -62,7 +62,9 @@ class myPromise {
                         x.then(resolve, reject)
                     }
                     else {
+                        // console.log(x, 'eee')
                         resolve(x)
+                        // reject(x)
                     }
                 
                 } catch (err) {
@@ -90,18 +92,58 @@ class myPromise {
         
     }
 
+    catch(onReject) {
+        return this.then(null, onReject)
+    }
+
 }
 
-new myPromise((resolve, reject) => {
+const test = new myPromise((resolve, reject) => {
     // setTimeout(() => {
         resolve('success')
+        // reject('fail')
     // }, 3000)
-}).then(res => {
+}).then(function(res) {
     console.log('then ', res, 0)
-    return '222'
-}).then(res => {
-    console.log('then ', res, 1)
+    // return '222'
+    let that = this
+    return that
+}, err => {
+    console.log(err, '111 err')
+    return '第二次 then 返回值'
+}).then(r => {
+    console.log(r, 'rrr')
 })
+
+// const onF = (res) => {
+//     console.log(res, '1')
+//     return onF
+// }
+
+// new myPromise((resolve, reject) => {
+//     // setTimeout(() => {
+//         resolve('su')
+//         // reject('fail')
+//     // }, 3000)
+// }).then(onF)
+
+
+
+
+
+
+// new Promise((resolve, reject) => {
+//     reject('promise reject')
+// }).then(res => {
+//     console.log(res, 'promise then')
+// }, err => {
+//     console.log(err, 'err')
+//     throw new Error(err)
+// }).then(res => {
+//     console.log(res, 'promise res 222')
+// }, err => {
+//     console.log(err, 'promise err 222')
+// })
 
 
 // const test1 = new myPromise((resolve, reject) => {
